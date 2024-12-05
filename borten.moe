@@ -1,0 +1,56 @@
+server {
+	include global/global.conf;
+
+	server_name borten.moe;
+	return 301 https://www.studentparlamentet.uio.no/politikken-var/pressemeldinger/2022-2023/pressemelding-statsrad-ola-borten-moe-erkleres-per.html;
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/borten.moe/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/borten.moe/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+	include global/global.conf;
+
+	server_name ola.borten.moe;
+	return 301 https://borten.moe;
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/borten.moe/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/borten.moe/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = borten.moe) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+
+	server_name borten.moe;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}
+
+server {
+    if ($host = ola.borten.moe) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+
+	server_name ola.borten.moe;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}
